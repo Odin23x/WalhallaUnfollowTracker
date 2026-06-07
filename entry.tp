@@ -1,0 +1,113 @@
+{
+  "api": 10,
+  "version": 110,
+  "name": "Walhalla Twitch Unfollow Tracker",
+  "id": "odin23x.twitch_unfollow_tracker_clean",
+  "configuration": {
+    "colorDark": "#1f1f2e",
+    "colorLight": "#7a5cff",
+    "parentCategory": "streaming"
+  },
+  "plugin_start_cmd_windows": "powershell.exe -ExecutionPolicy Bypass -NoProfile -File \"%TP_PLUGIN_FOLDER%WalhallaUnfollowTracker\\TwitchUnfollowTracker.ps1\"",
+  "settings": [
+    {
+      "name": "Twitch Client ID",
+      "type": "text",
+      "default": "",
+      "readOnly": false
+    },
+    {
+      "name": "Twitch User Access Token",
+      "type": "text",
+      "default": "",
+      "isPassword": true,
+      "readOnly": false
+    },
+    {
+      "name": "Broadcaster Login",
+      "type": "text",
+      "default": "",
+      "readOnly": false
+    },
+    {
+      "name": "Check Interval Seconds",
+      "type": "number",
+      "default": "300",
+      "minValue": 60,
+      "maxValue": 86400,
+      "readOnly": false
+    }
+  ],
+  "categories": [
+    {
+      "id": "odin23x.twitch_unfollow_tracker_clean.main",
+      "name": "Walhalla | Twitch Unfollow Tracker",
+      "actions": [
+        {
+          "id": "odin23x.twitch_unfollow_tracker_clean.act.refresh",
+          "name": "Refresh now",
+          "prefix": "Unfollow Tracker",
+          "type": "communicate",
+          "format": "Unfollow-Check jetzt ausführen",
+          "tryInline": true,
+          "data": [
+            {
+              "id": "odin23x.twitch_unfollow_tracker_clean.act.refresh.dummy",
+              "type": "text",
+              "label": "unused",
+              "default": ""
+            }
+          ]
+        },
+        {
+          "id": "odin23x.twitch_unfollow_tracker_clean.act.reset",
+          "name": "Reset Baseline",
+          "prefix": "Unfollow Tracker",
+          "type": "communicate",
+          "format": "Follower-Baseline zurücksetzen",
+          "tryInline": true,
+          "data": [
+            {
+              "id": "odin23x.twitch_unfollow_tracker_clean.act.reset.dummy",
+              "type": "text",
+              "label": "unused",
+              "default": ""
+            }
+          ]
+        }
+      ],
+      "states": [
+        {
+          "id": "odin23x.twitch_unfollow_tracker_clean.state.status",
+          "type": "text",
+          "desc": "Unfollow Tracker | Status",
+          "default": "Starting"
+        },
+        {
+          "id": "odin23x.twitch_unfollow_tracker_clean.state.list_text",
+          "type": "text",
+          "desc": "Unfollow Tracker | Unfollow Liste",
+          "default": "Noch keine Unfollows."
+        },
+        {
+          "id": "odin23x.twitch_unfollow_tracker_clean.state.last_error",
+          "type": "text",
+          "desc": "Unfollow Tracker | Letzter Fehler",
+          "default": ""
+        },
+        {
+          "id": "odin23x.twitch_unfollow_tracker_clean.state.last_debug",
+          "type": "text",
+          "desc": "Unfollow Tracker | Debug Info",
+          "default": ""
+        },
+        {
+          "id": "odin23x.twitch_unfollow_tracker_clean.state.last_check_time",
+          "type": "text",
+          "desc": "Unfollow Tracker | Letzter Check",
+          "default": ""
+        }
+      ]
+    }
+  ]
+}
