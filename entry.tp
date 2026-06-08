@@ -1,6 +1,6 @@
 {
   "api": 10,
-  "version": 110,
+  "version": 120,
   "name": "Walhalla Twitch Unfollow Tracker",
   "id": "odin23x.twitch_unfollow_tracker_clean",
   "configuration": {
@@ -40,37 +40,37 @@
   ],
   "categories": [
     {
-      "id": "odin23x.twitch_unfollow_tracker_clean.main",
+      "id": "odin23x.twitch_unfollow_tracker_clean.cat",
       "name": "Walhalla | Twitch Unfollow Tracker",
       "actions": [
         {
           "id": "odin23x.twitch_unfollow_tracker_clean.act.refresh",
-          "name": "Refresh now",
+          "name": "Jetzt pruefen",
           "prefix": "Unfollow Tracker",
           "type": "communicate",
-          "format": "Unfollow-Check jetzt ausführen",
+          "format": "Unfollow-Check sofort ausfuehren",
           "tryInline": true,
           "data": [
             {
-              "id": "odin23x.twitch_unfollow_tracker_clean.act.refresh.dummy",
+              "id": "odin23x.twitch_unfollow_tracker_clean.act.refresh.d",
               "type": "text",
-              "label": "unused",
+              "label": "x",
               "default": ""
             }
           ]
         },
         {
           "id": "odin23x.twitch_unfollow_tracker_clean.act.reset",
-          "name": "Reset Baseline",
+          "name": "Baseline zuruecksetzen",
           "prefix": "Unfollow Tracker",
           "type": "communicate",
-          "format": "Follower-Baseline zurücksetzen",
+          "format": "Follower-Basis zuruecksetzen (Neustart)",
           "tryInline": true,
           "data": [
             {
-              "id": "odin23x.twitch_unfollow_tracker_clean.act.reset.dummy",
+              "id": "odin23x.twitch_unfollow_tracker_clean.act.reset.d",
               "type": "text",
-              "label": "unused",
+              "label": "x",
               "default": ""
             }
           ]
@@ -87,7 +87,7 @@
           "id": "odin23x.twitch_unfollow_tracker_clean.state.list_text",
           "type": "text",
           "desc": "Unfollow Tracker | Unfollow Liste",
-          "default": "Noch keine Unfollows."
+          "default": ""
         },
         {
           "id": "odin23x.twitch_unfollow_tracker_clean.state.last_error",
