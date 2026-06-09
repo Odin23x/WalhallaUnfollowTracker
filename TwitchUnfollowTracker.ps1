@@ -232,7 +232,7 @@ function Save-Events {
     Write-AtomicFile -Path $EventsFile -Lines $lines
 }
 
-# Alte Events (>30 Tage) bereinigen - gibt gefilterte Liste zurück
+# Alte Events (>30 Tage) bereinigen - gibt gefilterte Liste zurueck
 function Purge-OldEvents {
     param($Events)
     $cutoff  = [datetime]::UtcNow.AddDays(-$EventKeepDays)
@@ -250,12 +250,12 @@ function Purge-OldEvents {
     }
     if ($removed -gt 0) {
         Save-Events -Events @($kept)
-        Write-Log "$removed Event(s) älter als $EventKeepDays Tage bereinigt."
+        Write-Log "$removed Event(s) aelter als $EventKeepDays Tage bereinigt."
     }
     return , @($kept)
 }
 
-# Wenn jemand re-folgt: Event auf "refollowed" setzen (NICHT löschen!)
+# Wenn jemand re-folgt: Event auf "refollowed" setzen (NICHT loeschen!)
 function Mark-RefollowedEvents {
     param([hashtable]$CurrentFollowers)
     $events  = @(Load-Events)
@@ -267,7 +267,7 @@ function Mark-RefollowedEvents {
         $uid    = Get-Prop $e 'user_id'
         $status = Get-Prop $e 'status'
         if ($CurrentFollowers.ContainsKey($uid) -and $status -eq 'unfollow') {
-            # Re-follow erkannt - Status setzen, nicht löschen
+            # Re-follow erkannt - Status setzen, nicht loeschen
             $e.status = "refollowed:$refAt"
             $changed  = $true
             Write-Log "Re-Follow erkannt: $(Get-Prop $e 'name') ($(Get-Prop $e 'login'))"
@@ -311,7 +311,7 @@ function Update-DisplayFromEvents {
                 $suffix = ' [re-followed]'
             }
         }
-        $lines.Add(('{0} — {1}{2}' -f $n, $t, $suffix))
+        $lines.Add(('{0}  -  {1}{2}' -f $n, $t, $suffix))
     }
 
     $activeCount = @($events | Where-Object { (Get-Prop $_ 'status') -eq 'unfollow' }).Count
@@ -431,7 +431,7 @@ function Run-Check {
         return
     }
 
-    Set-State ('{0}.state.status'     -f $PluginId) 'Prüfe...'
+    Set-State ('{0}.state.status'     -f $PluginId) 'Pruefe...'
     Set-State ('{0}.state.last_error' -f $PluginId) ''
 
     try {
@@ -478,7 +478,7 @@ function Run-Check {
         Update-DisplayFromEvents
 
         Set-State ('{0}.state.last_check_time' -f $PluginId) ([datetime]::Now.ToString('dd.MM.yyyy HH:mm:ss'))
-        Set-State ('{0}.state.status'          -f $PluginId) ('OK — {0} Follower' -f $current.Count)
+        Set-State ('{0}.state.status'          -f $PluginId) ('OK  -  {0} Follower' -f $current.Count)
         Set-State ('{0}.state.last_error'      -f $PluginId) ''
 
         Write-Log ('Check OK. Gespeichert jetzt={0}' -f $stored.Count)
@@ -567,7 +567,7 @@ function Connect-TouchPortal {
             Write-Log 'Verbunden mit Touch Portal.'
             return
         } catch {
-            Write-Log ("Verbindung fehlgeschlagen: {0} — Retry in 5s" -f $_.Exception.Message)
+            Write-Log ("Verbindung fehlgeschlagen: {0}  -  Retry in 5s" -f $_.Exception.Message)
             try { if ($null -ne $tc) { $tc.Close() } } catch {}
             Start-Sleep -Seconds 5
         }
@@ -599,7 +599,7 @@ Update-DisplayFromEvents
 
 while ($true) {
     try {
-        # Verbindung prüfen
+        # Verbindung pruefen
         if (-not (Test-Connected)) {
             throw 'TCP-Verbindung ist nicht mehr aktiv.'
         }
@@ -646,7 +646,7 @@ while ($true) {
 
     } catch {
         $errMsg = $_.Exception.Message
-        Write-Log "Hauptschleife: $errMsg — Starte Reconnect..."
+        Write-Log "Hauptschleife: $errMsg  -  Starte Reconnect..."
 
         try { Set-State ('{0}.state.status'     -f $PluginId) 'Reconnect...' } catch {}
         try { Set-State ('{0}.state.last_error' -f $PluginId) $errMsg } catch {}
@@ -657,7 +657,7 @@ while ($true) {
 
         # States nach Reconnect wiederherstellen
         try {
-            Set-State ('{0}.state.status'     -f $PluginId) 'Reconnected — OK'
+            Set-State ('{0}.state.status'     -f $PluginId) 'Reconnected  -  OK'
             Set-State ('{0}.state.last_error' -f $PluginId) ''
             Update-DisplayFromEvents
         } catch {}
