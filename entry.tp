@@ -1,7 +1,7 @@
 {
   "api": 10,
-  "version": 120,
-  "name": "Walhalla Twitch Unfollow Tracker",
+  "version": 301,
+  "name": "Walhalla Unfollow Tracker",
   "id": "odin23x.twitch_unfollow_tracker_clean",
   "configuration": {
     "colorDark": "#1f1f2e",
@@ -9,6 +9,80 @@
     "parentCategory": "streaming"
   },
   "plugin_start_cmd_windows": "powershell.exe -ExecutionPolicy Bypass -NoProfile -File \"%TP_PLUGIN_FOLDER%WalhallaUnfollowTracker\\TwitchUnfollowTracker.ps1\"",
+  "categories": [
+    {
+      "id": "odin23x.twitch_unfollow_tracker_clean.main",
+      "name": "Walhalla Unfollow Tracker",
+      "actions": [
+        {
+          "id": "odin23x.twitch_unfollow_tracker_clean.act.refresh",
+          "name": "Jetzt prüfen (Refresh)",
+          "prefix": "Unfollow Tracker",
+          "type": "communicate",
+          "format": "Follower-Check jetzt ausführen",
+          "description": "Erzwingt einen sofortigen Follower-Check.",
+          "tryInline": true,
+          "data": [
+            {
+              "id": "odin23x.twitch_unfollow_tracker_clean.act.refresh.dummy",
+              "type": "text",
+              "label": "unused",
+              "default": ""
+            }
+          ]
+        },
+        {
+          "id": "odin23x.twitch_unfollow_tracker_clean.act.reset",
+          "name": "Baseline zurücksetzen",
+          "prefix": "Unfollow Tracker",
+          "type": "communicate",
+          "format": "Follower-Baseline und Event-Datenbank zurücksetzen",
+          "description": "Löscht gespeicherte Follower-Liste und Event-Datenbank. Startet komplett neu.",
+          "tryInline": true,
+          "data": [
+            {
+              "id": "odin23x.twitch_unfollow_tracker_clean.act.reset.dummy",
+              "type": "text",
+              "label": "unused",
+              "default": ""
+            }
+          ]
+        }
+      ],
+      "states": [
+        {
+          "id": "odin23x.twitch_unfollow_tracker_clean.state.status",
+          "type": "text",
+          "desc": "Unfollow Tracker | Status",
+          "default": "Starting"
+        },
+        {
+          "id": "odin23x.twitch_unfollow_tracker_clean.state.list_text",
+          "type": "text",
+          "desc": "Unfollow Tracker | Unfollow-Liste (30 Tage)",
+          "default": "Noch keine Unfollows in den letzten 30 Tagen."
+        },
+        {
+          "id": "odin23x.twitch_unfollow_tracker_clean.state.last_error",
+          "type": "text",
+          "desc": "Unfollow Tracker | Letzter Fehler",
+          "default": ""
+        },
+        {
+          "id": "odin23x.twitch_unfollow_tracker_clean.state.last_debug",
+          "type": "text",
+          "desc": "Unfollow Tracker | Debug Info",
+          "default": ""
+        },
+        {
+          "id": "odin23x.twitch_unfollow_tracker_clean.state.last_check_time",
+          "type": "text",
+          "desc": "Unfollow Tracker | Letzter Check",
+          "default": ""
+        }
+      ]
+    }
+  ],
   "settings": [
     {
       "name": "Twitch Client ID",
@@ -36,78 +110,6 @@
       "minValue": 60,
       "maxValue": 86400,
       "readOnly": false
-    }
-  ],
-  "categories": [
-    {
-      "id": "odin23x.twitch_unfollow_tracker_clean.cat",
-      "name": "Walhalla | Twitch Unfollow Tracker",
-      "actions": [
-        {
-          "id": "odin23x.twitch_unfollow_tracker_clean.act.refresh",
-          "name": "Jetzt pruefen",
-          "prefix": "Unfollow Tracker",
-          "type": "communicate",
-          "format": "Unfollow-Check sofort ausfuehren",
-          "tryInline": true,
-          "data": [
-            {
-              "id": "odin23x.twitch_unfollow_tracker_clean.act.refresh.d",
-              "type": "text",
-              "label": "x",
-              "default": ""
-            }
-          ]
-        },
-        {
-          "id": "odin23x.twitch_unfollow_tracker_clean.act.reset",
-          "name": "Baseline zuruecksetzen",
-          "prefix": "Unfollow Tracker",
-          "type": "communicate",
-          "format": "Follower-Basis zuruecksetzen (Neustart)",
-          "tryInline": true,
-          "data": [
-            {
-              "id": "odin23x.twitch_unfollow_tracker_clean.act.reset.d",
-              "type": "text",
-              "label": "x",
-              "default": ""
-            }
-          ]
-        }
-      ],
-      "states": [
-        {
-          "id": "odin23x.twitch_unfollow_tracker_clean.state.status",
-          "type": "text",
-          "desc": "Unfollow Tracker | Status",
-          "default": "Starting"
-        },
-        {
-          "id": "odin23x.twitch_unfollow_tracker_clean.state.list_text",
-          "type": "text",
-          "desc": "Unfollow Tracker | Unfollow Liste",
-          "default": ""
-        },
-        {
-          "id": "odin23x.twitch_unfollow_tracker_clean.state.last_error",
-          "type": "text",
-          "desc": "Unfollow Tracker | Letzter Fehler",
-          "default": ""
-        },
-        {
-          "id": "odin23x.twitch_unfollow_tracker_clean.state.last_debug",
-          "type": "text",
-          "desc": "Unfollow Tracker | Debug Info",
-          "default": ""
-        },
-        {
-          "id": "odin23x.twitch_unfollow_tracker_clean.state.last_check_time",
-          "type": "text",
-          "desc": "Unfollow Tracker | Letzter Check",
-          "default": ""
-        }
-      ]
     }
   ]
 }
