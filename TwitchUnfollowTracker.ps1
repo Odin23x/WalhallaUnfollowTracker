@@ -182,7 +182,7 @@ function Save-Followers {
 function Load-Events {
     $events = New-Object System.Collections.ArrayList
     $seen   = @{}
-    if (-not (Test-Path $EventsFile)) { return , @($events) }
+    if (-not (Test-Path $EventsFile)) { return $events.ToArray() }
     foreach ($line in @(Get-Content -Path $EventsFile -Encoding UTF8 -ErrorAction SilentlyContinue)) {
         if ([string]::IsNullOrWhiteSpace($line)) { continue }
         $p = $line -split "`t", 6
@@ -205,7 +205,7 @@ function Load-Events {
             status     = $status
         })
     }
-    return , @($events)
+    return $events.ToArray()
 }
 
 function Save-Events {
@@ -252,7 +252,7 @@ function Purge-OldEvents {
         Save-Events -Events @($kept)
         Write-Log "$removed Event(s) aelter als $EventKeepDays Tage bereinigt."
     }
-    return , @($kept)
+    return $kept.ToArray()
 }
 
 # Wenn jemand re-folgt: Event auf "refollowed" setzen (NICHT loeschen!)
