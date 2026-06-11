@@ -241,7 +241,7 @@ function Purge-OldEvents {
     foreach ($e in @($Events)) {
         $raw = Get-Prop $e 'time_utc'
         $dt  = [datetime]::MinValue
-        $ok  = [datetime]::TryParse($raw, [ref]$dt)
+        $ok  = [datetime]::TryParse($raw, [System.Globalization.CultureInfo]::InvariantCulture, [System.Globalization.DateTimeStyles]::RoundtripKind, [ref]$dt)
         if ($ok -and $dt -ge $cutoff) {
             [void]$kept.Add($e)
         } else {
@@ -290,7 +290,7 @@ function Update-DisplayFromEvents {
     # Nach Zeit absteigend, max. 20 anzeigen
     $sorted = @($events | Sort-Object {
         $dt = [datetime]::MinValue
-        [void][datetime]::TryParse((Get-Prop $_ 'time_utc'), [ref]$dt)
+        [void][datetime]::TryParse((Get-Prop $_ 'time_utc'), [System.Globalization.CultureInfo]::InvariantCulture, [System.Globalization.DateTimeStyles]::RoundtripKind, [ref]$dt)
         $dt
     } -Descending | Select-Object -First 20)
 
@@ -305,7 +305,7 @@ function Update-DisplayFromEvents {
         if ($status -like 'refollowed:*') {
             $rfRaw = $status.Substring('refollowed:'.Length)
             $rfDt  = [datetime]::MinValue
-            if ([datetime]::TryParse($rfRaw, [ref]$rfDt)) {
+            if ([datetime]::TryParse($rfRaw, [System.Globalization.CultureInfo]::InvariantCulture, [System.Globalization.DateTimeStyles]::RoundtripKind, [ref]$rfDt)) {
                 $suffix = ' [re-followed {0}]' -f $rfDt.ToLocalTime().ToString('dd.MM.yy')
             } else {
                 $suffix = ' [re-followed]'
