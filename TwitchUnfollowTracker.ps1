@@ -163,7 +163,7 @@ function Save-Followers {
         $f   = $e.Value
         $uid = Get-Prop $f 'user_id'
         if ([string]::IsNullOrWhiteSpace($uid)) { continue }
-        $lines.Add(('{0}`t{1}`t{2}`t{3}`t{4}' -f `
+        $lines.Add(("{0}`t{1}`t{2}`t{3}`t{4}" -f `
             (Escape-Field $uid), `
             (Escape-Field (Get-Prop $f 'user_login')), `
             (Escape-Field (Get-Prop $f 'user_name')), `
@@ -221,7 +221,7 @@ function Save-Events {
         $seen[$key] = $true
         $status = Get-Prop $e 'status'
         if ([string]::IsNullOrWhiteSpace($status)) { $status = 'unfollow' }
-        $lines.Add(('{0}`t{1}`t{2}`t{3}`t{4}`t{5}' -f `
+        $lines.Add(("{0}`t{1}`t{2}`t{3}`t{4}`t{5}" -f `
             (Escape-Field $uid), `
             (Escape-Field (Get-Prop $e 'login')), `
             (Escape-Field (Get-Prop $e 'name')), `
