@@ -646,6 +646,14 @@ while ($true) {
 
     } catch {
         $errMsg = $_.Exception.Message
+
+        # closePlugin = sauberes Beenden, kein Reconnect
+        if ($errMsg -like '*closePlugin*') {
+            Write-Log 'Sauberer Shutdown auf Anforderung von Touch Portal.'
+            Disconnect-TouchPortal
+            exit 0
+        }
+
         Write-Log "Hauptschleife: $errMsg  -  Starte Reconnect..."
 
         try { Set-State ('{0}.state.status'     -f $PluginId) 'Reconnect...' } catch {}
